@@ -130,11 +130,12 @@ class ImageProvider extends FileProvider
     {
         if ($format == 'reference') {
             $path = $this->getReferenceImage($media);
+            $path = $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
         } else {
-            $path = $this->thumbnail->generatePublicUrl($this, $media, $format);
+            $path = '/' . $this->thumbnail->generatePublicUrl($this, $media, $format);
         }
 
-        return $this->getCdn()->getPath($path, $media->getCdnIsFlushable());
+        return $path;
     }
 
     /**
